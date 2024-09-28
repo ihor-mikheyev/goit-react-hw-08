@@ -8,7 +8,7 @@ export const UserMenu = () => {
   const user = useSelector(selectUser);
 
   return (
-    <div className={css.wrapper}>
+    <div className={css.container}>
       <p className={css.username}>Welcome, {user.name}</p>
       <button type="button" onClick={() => dispatch(logout())}>
         Logout

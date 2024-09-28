@@ -1,15 +1,30 @@
 import { Formik, Form, Field } from "formik";
+import { useDispatch } from "react-redux";
+import { login } from "../../redux/auth/operations";
 import css from "./LoginForm.module.css";
 
 export default function LoginForm() {
-  const handleSubmit = (values, actions) => {
-    console.log(values);
-    actions.resetForm();
+  const dispatch = useDispatch();
+  const handleSubmit = (values, { resetForm }) => {
+    dispatch(
+      login({
+        email: values.email,
+        password: values.password,
+      })
+    )
+      .unwrap()
+      .then(() => {
+        console.log("Login successful");
+      })
+      .catch(() => {
+        console.log("Login error");
+      });
+
+    resetForm();
   };
   return (
     <Formik
       initialValues={{
-        username: "",
         email: "",
         password: "",
       }}
