@@ -2,6 +2,9 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 axios.defaults.baseURL = "https://connections-api.goit.global/";
+// const axiosInstance = axios.create({
+//   baseURL: "https://connections-api.goit.global/",
+// });
 
 const setAuthHeader = (token) => {
   axios.defaults.headers.common.Authorization = `Bearer ${token}`;
@@ -48,7 +51,6 @@ export const logout = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
 
 export const refreshUser = createAsyncThunk(
   "auth/refresh",
-  "auth/refresh",
   async (_, thunkAPI) => {
     const state = thunkAPI.getState();
     const persistedToken = state.auth.token;
@@ -59,7 +61,7 @@ export const refreshUser = createAsyncThunk(
 
     try {
       setAuthHeader(persistedToken);
-      const res = await axios.get("/users/me");
+      const res = await axios.get("/users/current");
       return res.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);

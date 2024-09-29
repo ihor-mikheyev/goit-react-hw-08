@@ -3,6 +3,8 @@ import { fetchContacts, addContact, deleteContact } from "./operations";
 
 const initialState = {
   items: [],
+  isLoading: false,
+  error: null,
 };
 
 function handlePending(state) {
@@ -16,15 +18,13 @@ function handleRejected(state, action) {
 
 const contactsSlice = createSlice({
   name: "contacts",
-  loading: false,
-  error: null,
   initialState: initialState,
 
   extraReducers: (builder) => {
     builder
       .addCase(fetchContacts.pending, handlePending)
       .addCase(fetchContacts.fulfilled, (state, action) => {
-        state.loading = false;
+        state.isLoading = false;
         state.error = null;
         state.items = action.payload;
       })
